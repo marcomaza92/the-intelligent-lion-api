@@ -17,17 +17,17 @@ def create_app(test_config=None):
     key: str = os.environ.get("SUPABASE_KEY")
     supabaseWrapper: Client = create_client(url, key)
 
-    bp = Blueprint('todos', __name__, url_prefix='/')
+    # bp = Blueprint('todos', __name__, url_prefix='/')
 
     # Endpoints
-    @bp.route('/', methods=['GET'])
+    @app.route('/', methods=['GET'])
     def index():
         response = supabaseWrapper.table('todos').select("*").execute()
         data = jsonify(response.data)
         # response.headers.add('Access-Control-Allow-Origin', '*')
         return data
 
-    @bp.route('/create', methods=['POST'])
+    @app.route('/create', methods=['POST'])
     def create():
         response = supabaseWrapper.table('todos').insert({"task": request.args.get('task'), "is_complete": request.args.get('is_complete')}).execute()
         data = jsonify(response.data)
