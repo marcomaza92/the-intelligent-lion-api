@@ -20,14 +20,14 @@ def create_app(test_config=None):
     # bp = Blueprint('todos', __name__, url_prefix='/')
 
     # Endpoints
-    @app.route('/', methods=['GET'])
-    def index():
+    @app.route('/')
+    def home():
         response = supabaseWrapper.table('todos').select("*").execute()
         data = jsonify(response.data)
         # response.headers.add('Access-Control-Allow-Origin', '*')
         return data
 
-    @app.route('/create', methods=['POST'])
+    @app.route('/create')
     def create():
         response = supabaseWrapper.table('todos').insert({"task": request.args.get('task'), "is_complete": request.args.get('is_complete')}).execute()
         data = jsonify(response.data)
