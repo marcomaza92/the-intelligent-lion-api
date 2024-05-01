@@ -27,9 +27,9 @@ def create_app(test_config=None):
         # response.headers.add('Access-Control-Allow-Origin', '*')
         return data
 
-    @app.route('/create')
+    @app.route('/create', methods=['POST'])
     def create():
-        response = supabaseWrapper.table('todos').insert({"task": request.args.get('task'), "is_complete": request.args.get('is_complete')}).execute()
+        response = supabaseWrapper.table('todos').insert({"task": request.form.get('task'), "is_complete": request.form.get('is_complete')}).execute()
         data = jsonify(response.data)
         return data
 
